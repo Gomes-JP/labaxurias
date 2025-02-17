@@ -6,7 +6,7 @@
     <title>Gerador de Nomes Pentecostais</title>
     <style>
         /* Reset básico */
-        body, h1, p, button {
+        body, h1, p, button, input {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -14,8 +14,8 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            color: #fff;
+            background: linear-gradient(135deg, #d1f2eb, #a2d9ce);
+            color: #34495e;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,11 +25,11 @@
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
             border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             width: 100%;
         }
@@ -38,48 +38,75 @@
             font-size: 28px;
             margin-bottom: 20px;
             font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            background: #2ecc71;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        .tab-button:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active {
+            background: #27ae60;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         #nomeGerado {
             font-size: 24px;
             font-weight: bold;
             margin: 20px 0;
-            color: #ffeb3b;
-            background: rgba(0, 0, 0, 0.2);
+            color: #27ae60;
+            background: rgba(255, 255, 255, 0.9);
             padding: 10px;
             border-radius: 8px;
-        }
-
-        button {
-            background: #ff4081;
-            color: #fff;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        button:hover {
-            background: #e91e63;
-            transform: translateY(-2px);
-        }
-
-        button:active {
-            transform: translateY(0);
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #2ecc71;
+            border-radius: 8px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 200px;
         }
 
         footer {
             margin-top: 30px;
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(52, 73, 94, 0.8);
         }
 
         footer a {
-            color: #ffeb3b;
+            color: #27ae60;
             text-decoration: none;
         }
 
@@ -91,22 +118,113 @@
 <body>
     <div class="container">
         <h1>Gerador de Nomes Pentecostais</h1>
-        <p id="nomeGerado">Clique no botão para gerar um nome!</p>
-        <button onclick="gerarNome()">Gerar Nome</button>
+
+        <!-- Abas -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="abrirTab('aleatorio')">Aleatório</button>
+            <button class="tab-button" onclick="abrirTab('aniversario')">Por Aniversário</button>
+        </div>
+
+        <!-- Conteúdo da aba Aleatório -->
+        <div id="aleatorio" class="tab-content active">
+            <p id="nomeGerado">Clique no botão para gerar um nome aleatório!</p>
+            <button class="tab-button" onclick="gerarNomeAleatorio()">Gerar Nome Aleatório</button>
+        </div>
+
+        <!-- Conteúdo da aba Por Aniversário -->
+        <div id="aniversario" class="tab-content">
+            <p id="nomeGeradoAniversario">Insira sua data de aniversário!</p>
+            <input type="number" id="dia" placeholder="Dia (1-31)" min="1" max="31">
+            <input type="number" id="mes" placeholder="Mês (1-12)" min="1" max="12">
+            <button onclick="gerarNomePorAniversario()">Gerar Nome por Aniversário</button>
+        </div>
+
         <footer>
-            Feito com ❤️ por <a href="#" target="_blank">Você</a>
+            Feito por <a href="https://www.instagram.com/matos_.jp/" target="_blank">João Paulo A. S. Matos</a>
         </footer>
     </div>
 
     <script>
-        const primeiraParte = ["Labareda", "Marreta", "Espada", "Trovão", "Fogo", "Glória", "Poder", "Voz", "Luz", "Cajado"];
-        const segundaParte = ["de Fogo", "de Matar Demônios", "do Senhor", "Celestial", "Divina", "do Espírito", "da Vitória", "Eterna", "da Salvação", "do Céu"];
+        const primeira_parte = [
+            "Labareda", "Marreta", "Espada", "Trovão", "Fogo",
+            "Glória", "Poder", "Voz", "Luz", "Cajado",
+            "Candelabro", "Trombeta", "Maná", "Arca", "Sinai",
+            "Jericó", "Monte", "Profeta", "Anjo", "Serafim",
+            "Tempestade", "Aurora", "Eclipse", "Raio", "Ventania",
+            "Tsunami", "Cometa", "Galáxia", "Abismo", "Céu",
+            "Escudo", "Lança", "Arco", "Flecha", "Martelo",
+            "Corrente", "Elmo", "Adaga", "Glória", "Unção",
+            "Milagre", "Vitória", "Honra", "Majestade", "Trono",
+            "Reino", "Herança", "Voz", "Luz", "Fogo",
+            "Água", "Sopro", "Chama", "Brisa", "Maré",
+            "Eco"
+        ];
 
-        function gerarNome() {
-            const primeira = primeiraParte[Math.floor(Math.random() * primeiraParte.length)];
-            const segunda = segundaParte[Math.floor(Math.random() * segundaParte.length)];
+        const segunda_parte = [
+            "de Fogo", "de Matar Demônios", "do Senhor", "Celestial",
+            "Divina", "do Espírito", "da Vitória", "Eterna",
+            "da Salvação", "do Céu", "de Glória", "da Vitória",
+            "do Espírito", "da Salvação", "da Libertação", "da Cura",
+            "da Restauração", "da Unção", "de Sião", "do Monte Sinai",
+            "do Trono Celestial", "do Jordão", "do Getsêmani",
+            "do Apocalipse", "do Pentecostes", "do Tabernáculo",
+            "do Santuário", "de Matar Demônios", "de Derrotar Gigantes",
+            "de Quebrar Correntes", "de Destruir Fortalezas",
+            "de Vencer o Mal", "de Proteção Divina", "de Guerra Santa",
+            "de Conquista", "de Resistência", "de Fé Inabalável",
+            "que Abala os Céus", "que Move Montanhas", "que Transforma Vidas",
+            "que Liberta", "que Cura", "que Restaura", "que Ilumina",
+            "que Purifica", "que Consome", "que Resplandece", "da Esperança",
+            "da Fé", "do Amor", "da Graça", "da Misericórdia", "da Redenção",
+            "da Eternidade", "da Glória Eterna", "da Luz Divina",
+            "da Paz Celestial"
+        ];
+
+        // Função para alternar entre abas
+        function abrirTab(tabName) {
+            // Esconde todas as abas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove a classe 'active' de todos os botões
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Mostra a aba selecionada
+            document.getElementById(tabName).classList.add('active');
+
+            // Adiciona a classe 'active' ao botão clicado
+            document.querySelector(`[onclick="abrirTab('${tabName}')"]`).classList.add('active');
+        }
+
+        // Função para gerar nome aleatório
+        function gerarNomeAleatorio() {
+            const primeira = primeira_parte[Math.floor(Math.random() * primeira_parte.length)];
+            const segunda = segunda_parte[Math.floor(Math.random() * segunda_parte.length)];
             const nomeGerado = `${primeira} ${segunda}`;
             document.getElementById("nomeGerado").textContent = nomeGerado;
+        }
+
+        // Função para gerar nome a partir da data de aniversário
+        function gerarNomePorAniversario() {
+            const dia = parseInt(document.getElementById("dia").value);
+            const mes = parseInt(document.getElementById("mes").value);
+
+            if (isNaN(dia) || isNaN(mes) || dia < 1 || dia > 31 || mes < 1 || mes > 12) {
+                alert("Por favor, insira uma data válida!");
+                return;
+            }
+
+            // Usar dia e mês como sementes para gerar índices
+            const indicePrimeira = (dia - 1) % primeira_parte.length;
+            const indiceSegunda = (mes - 1) % segunda_parte.length;
+
+            const primeira = primeira_parte[indicePrimeira];
+            const segunda = segunda_parte[indiceSegunda];
+            const nomeGerado = `${primeira} ${segunda}`;
+            document.getElementById("nomeGeradoAniversario").textContent = nomeGerado;
         }
     </script>
 </body>
