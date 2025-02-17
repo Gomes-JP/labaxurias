@@ -5,25 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Nomes Pentecostais</title>
     <style>
+        /* Reset básico */
+        body, h1, p, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             text-align: center;
             padding: 20px;
         }
-        h1 {
-            font-size: 24px;
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
         }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        #nomeGerado {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #ffeb3b;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
         button {
-            font-size: 20px;
-            padding: 10px 20px;
-            margin-top: 20px;
+            background: #ff4081;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background: #e91e63;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        footer a {
+            color: #ffeb3b;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <h1>Gerador de Nomes Pentecostais</h1>
-    <p id="nomeGerado">Clique no botão para gerar um nome!</p>
-    <button onclick="gerarNome()">Gerar Nome</button>
+    <div class="container">
+        <h1>Gerador de Nomes Pentecostais</h1>
+        <p id="nomeGerado">Clique no botão para gerar um nome!</p>
+        <button onclick="gerarNome()">Gerar Nome</button>
+        <footer>
+            Feito com ❤️ por <a href="#" target="_blank">Você</a>
+        </footer>
+    </div>
 
     <script>
         const primeiraParte = ["Labareda", "Marreta", "Espada", "Trovão", "Fogo", "Glória", "Poder", "Voz", "Luz", "Cajado"];
