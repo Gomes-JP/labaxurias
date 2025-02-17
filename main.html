@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Nomes Pentecostais</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerador de Nomes Pentecostais</h1>
+    <p id="nomeGerado">Clique no botão para gerar um nome!</p>
+    <button onclick="gerarNome()">Gerar Nome</button>
+
+    <script>
+        const primeiraParte = ["Labareda", "Marreta", "Espada", "Trovão", "Fogo", "Glória", "Poder", "Voz", "Luz", "Cajado"];
+        const segundaParte = ["de Fogo", "de Matar Demônios", "do Senhor", "Celestial", "Divina", "do Espírito", "da Vitória", "Eterna", "da Salvação", "do Céu"];
+
+        function gerarNome() {
+            const primeira = primeiraParte[Math.floor(Math.random() * primeiraParte.length)];
+            const segunda = segundaParte[Math.floor(Math.random() * segundaParte.length)];
+            const nomeGerado = `${primeira} ${segunda}`;
+            document.getElementById("nomeGerado").textContent = nomeGerado;
+        }
+    </script>
+</body>
+</html>
